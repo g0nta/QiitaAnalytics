@@ -14,7 +14,7 @@ if __name__ == "__main__":
     cnf = config.Config()
     h = {'Authorization': 'Bearer '+ cnf.ApiKey}
 
-    start = '2018-10-01'
+    start = '2018-10-15'
     end = '2018-10-20'
 
     date_list = [d.strftime('%Y-%m-%d') for d in pd.date_range(start, end)]
@@ -27,14 +27,14 @@ if __name__ == "__main__":
     for start, end in zip(start_list, end_list):
         p = {
             'per_page': 100,
-            'query': 'created:>{} created<{}'.format(start, end)
+            'query': 'created:>{} created:<{}'.format(start, end)
         }
 
         print("created_date %s : page 1" % start)
         time.sleep(sleep_sec)
         r = requests.get(url, params=p, headers=h)
         total_count = int(r.headers['Total-Count'])
-
+        
         if total_count == 0:
             continue
 
