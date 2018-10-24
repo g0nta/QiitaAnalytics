@@ -9,13 +9,10 @@ def get_simple_df(df):
     return df[['id', 'title', 'body', 'created_at', 'updated_at','likes_count', 'comments_count', 'tags_str',
                'user_permanent_id', 'user_id', 'user_description', 'user_followees_count', 'user_followers_count', 'user_items_count']]
 
-if __name__ == "__main__":
+def crawl_qiita(start, end):
     url = 'https://qiita.com/api/v2/items'
     cnf = config.Config()
     h = {'Authorization': 'Bearer '+ cnf.ApiKey}
-
-    start = '2018-10-15'
-    end = '2018-10-20'
 
     date_list = [d.strftime('%Y-%m-%d') for d in pd.date_range(start, end)]
     start_list = date_list[:-1]
