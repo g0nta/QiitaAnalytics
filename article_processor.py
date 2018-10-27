@@ -5,17 +5,16 @@ import neologd_normalizer as norm
 
 if __name__ == "__main__":
 	m = MeCab.Tagger("-d /usr/lib/mecab/dic/mecab-ipadic-neologd")
-	df = pd.read_csv('./data/qiita/2018-04-01.csv')
+	df = pd.read_csv('./data/qiita/2018-04-02.csv')
 	body = df.iat[0,2]
+	print(df.iat[0,0])
 	normalized_body = norm.normalize_neologd(body)
-	lines = m.parse(normalized_body).splitlines()
-	words = []
+	nodes = m.parseToNode(normalized_body)
+	target_parts = ('名詞','動詞','形容詞',)
 	
-	for line in lines:
-		chunks = line.split('\t')
-		print(line)
-		break
-		#if len(chunks) > 3: #and (chunks[3].startswith('動詞') or chunks[3].startswith('形容詞') or (chunks[3].startswith('名詞') and not chunks[3].startswith('名詞-数'))):
-		#	words.append(chunks[0])
-		#	print(chunks[0])
+	words = []
+	while nodes:
+		if nodes.feature.split(',')[0] in target_parts:
+			words.append(nodes.surface0
+		nodes = nodes.next
 
